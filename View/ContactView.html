@@ -1,0 +1,38 @@
+
+<div>
+    <title>Contact Me</title>
+    <h1 align="center">Send me an E-mail!</h1>
+    <br /><br /><br />
+    <form name="myForm" ng-submit="submitOnclick()" ng-controller="ContactController" class="form-horizontal">
+        <fieldset>
+            <legend></legend>
+
+            <div class="form-group">
+                <label for="inputTitle" class="col-lg-2 control-label">Title</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="inputTitle" ng-model="formInfo.Title" id="inputTitle" placeholder="Title">
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <label for="textArea" class="col-lg-2 control-label">Message</label>
+                <div class="col-lg-10">
+                    <textarea class="form-control" required rows="7" ng-model="formInfo.Message" name="textArea" id="textArea"></textarea>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail" class="col-lg-2 control-label">Your E-Mail Address</label>
+                <div class="col-lg-10">
+                    <input type="email" class="form-control" id="inputEmail" placeholder="E-mail" name="input" ng-model="formInfo.Email" required>
+   
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-10 col-lg-offset-2">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

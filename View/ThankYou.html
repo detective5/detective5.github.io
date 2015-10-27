@@ -1,0 +1,84 @@
+<div>
+    <style>
+        div.smileyface {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+             border-radius: 150px;
+            -webkit-border-radius: 150px;
+            -moz-border-radius: 150px;
+            display: block;
+        }
+
+        p.eyes {
+            width: 50px;
+            height: 80px;
+            background: #222;
+            border-radius: 100px/160px;
+            -webkit-border-radius: 100px 160px;
+            -moz-border-radius: 100px/160px;
+            position: absolute;
+            top: 60px;
+            box-shadow: 0 2px 0 rgba(255,255,255, 0.8);
+            -webkit-box-shadow: 0 2px 0 rgba(255,255,255, 0.8);
+            -moz-box-shadow: 0 2px 0 rgba(255,255,255, 0.8);
+        }
+
+            p.eyes.lefteye {
+                left: 75px;
+            }
+
+            p.eyes.righteye {
+                right: 92px;
+            }
+
+        div.smile {
+            width: 200px;
+            height: 70px;
+            border: 10px solid #222;
+            border-top: 0;
+            background: rgba(0,0,0,0);
+            -moz-border-radius: 0 0 120px 120px / 0 0 90px 90px;
+            -webkit-border-radius: 0 0 120px 120px 0 0 90px 90px;
+            border-radius: 0 0 120px 120px / 0 0 90px 90px;
+            position: absolute;
+            bottom: 50px;
+            left: 38px;
+            box-shadow: 0 2px 0 rgba(255,255,255, 0.8);
+            -webkit-box-shadow: 0 2px 0 rgba(255,255,255, 0.8);
+            -moz-box-shadow: 0 2px 0 rgba(255,255,255, 0.8);
+        }
+        div.corner {
+            width: 10px;
+            height: 30px;
+            background: #222;
+            border-radius: 100px/160px;
+            -webkit-border-radius: 100px 160px;
+            -moz-border-radius: 100px/160px;
+            position: absolute;
+            top: -12px;
+            -webkit-transform: rotate(65deg);
+            -moz-transform: rotate(65deg);
+            left: -12px;
+        }
+            div.corner.right {
+                /*left: 202px;*/
+                left: 184px;
+                -webkit-transform: rotate(-65deg);
+                -moz-transform: rotate(-65deg);
+            }
+    </style>
+    <title>Thank you</title>
+    
+    <div class="smileyface">
+        <p class="eyes lefteye"></p>
+        <p class="eyes righteye"></p>
+        <div class="smile">
+            <div class="corner"></div>
+            <div class="corner right"></div>
+        </div>
+    </div>
+    <h1 align="center">Thank you, I have received your message!!</h1>
+</div>

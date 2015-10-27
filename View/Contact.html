@@ -1,0 +1,45 @@
+<style>
+    textarea {
+        width: 80%;
+    }
+
+</style>
+<div>
+    <center>
+        <title>Contact Me</title>
+        <h4 align="center">Send me an E-mail!</h4>
+        <br /><br /><br />
+        <form name="myForm" ng-submit="submitOnclick()" ng-controller="ContactController">
+            <fieldset>
+                <legend></legend>
+
+                <div>
+                    <label for="inputTitle">Title:</label>
+                    <div>
+                        <input type="text" class="input-xxlarge" name="inputTitle" ng-model="formInfo.Title" id="inputTitle" placeholder="Title">
+                    </div>
+                </div>
+                <br />
+                <div>
+                    <label for="textArea">Message:</label>
+                    <div>
+                        <textarea class="form-control" required rows="7" ng-model="formInfo.Message" name="textArea" id="textArea"></textarea>
+                    </div>
+                </div>
+                <div>
+                    <label for="inputEmail">Your E-Mail Address:</label>
+                    <div>
+                        <input type="email" id="inputEmail" placeholder="E-mail" name="input" ng-model="formInfo.Email" required>
+
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </center>
+</div>
+<br /><br />
