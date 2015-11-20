@@ -27,7 +27,13 @@ app.config(function ($routeProvider, $locationProvider) {
                 templateUrl: 'View/Thank.html'
             }
         )
-        .otherwise({ redirectTo: 'Welcome.html' });
+        .when('/FaceLock',
+            {
+                templateUrl: 'View/FaceLock.html',
+                controller: "FaceLockController",
+            }
+        );
+        //.otherwise({ redirectTo: 'Welcome.html' });
     //$locationProvider.html5Mode(true);
 
 });

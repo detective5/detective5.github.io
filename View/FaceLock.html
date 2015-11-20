@@ -1,0 +1,220 @@
+﻿<head>
+    
+    <!--------------------------------------pop up css---------------------------------------->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url(4.jpg);
+            background-size: cover;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: Tahoma, Arial, sans-serif;
+            color: orange;
+            margin: 100px 0;
+        }
+
+        .box {
+            width: 20%;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.2);
+            padding: 35px;
+            border: 2px solid #fff;
+            border-radius: 20px/50px;
+            background-clip: padding-box;
+            text-align: center;
+        }
+        .textbox {
+            font-size: 1em;
+            padding: 10px;
+            color: black;
+            border: 2px solid black;
+            text-decoration: none;
+        }
+
+         .button {
+            font-size: 1em;
+            padding: 10px;
+            color: black;
+            border: 2px solid black;
+            border-radius: 20px/50px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease-out;
+        }
+
+            .button:hover {
+                background: #c4bfbf;
+            }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            transition: opacity 500ms;
+            visibility: hidden;
+            opacity: 0;
+        }
+
+            .overlay:target {
+                visibility: visible;
+                opacity: 1;
+            }
+
+        .popup {
+            margin: 70px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+            width: 30%;
+            position: relative;
+            transition: all 5s ease-in-out;
+        }
+
+            .popup h2 {
+                margin-top: 0;
+                color: #333;
+                font-family: Tahoma, Arial, sans-serif;
+            }
+
+            .popup .close {
+                position: absolute;
+                top: 20px;
+                right: 30px;
+                transition: all 200ms;
+                font-size: 30px;
+                font-weight: bold;
+                text-decoration: none;
+                color: #333;
+            }
+
+                .popup .close:hover {
+                    color: orange;
+                }
+
+            .popup .content {
+                max-height: 30%;
+                overflow: auto;
+            }
+        video, canvas {
+            display: block;
+            margin: 0 auto;
+            border-style: solid;
+            border-width: 1px;
+        }
+
+        .item {
+            display: block;
+
+        }
+        .modal .modal-body {
+            max-height: 820px;
+            max-width: 900px;
+            overflow-y: auto;
+        }
+    </style>
+    <!--------------------------------------pop up css---------------------------------------->
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+
+    <center>
+        <label><font color="red" id="userText">No face detected</font></label>
+    </center>
+    <br />
+    <center>
+        <button class="button" data-toggle="modal" data-target="#cameraPopup" ng-click="CameraPopup()">Camera</button>
+    </center>
+    <!--<div class="box">
+        <a class="button" href="#cameraPopup" onclick="CameraPopup()">Camera</a>
+    </div>-->
+
+    <br />
+    <div>
+        <center>
+            <label>Name: </label>
+            <input id="personName" class="textbox" type="text" name="name">
+        </center>
+        <br />
+
+        <!--<button class="button" onclick="CreateFaceset()">Create faceset</button>-->
+        <center>
+            <button class="button" ng-click="Create()">Create person</button>
+            <button class="button" ng-click="Train()">Train person</button>
+            <button class="button" ng-click="Vertify()">Vertify Person</button>
+            <button class="button" ng-click="AddFace()">Add Face</button>
+            <!--<button class="button" onclick="GetInfo()">Get Info</button>-->
+        </center>
+
+    </div>
+    <br />
+    <center>
+        <a data-toggle="modal" data-target="#howTo" href="">How to use?</a>
+    </center>
+
+    <!--<div id="cameraPopup" class="overlay">
+        <div class="popup">
+
+            <a id="closePopup" class="close" href="#" onclick="CameraPopupClose()">×</a>
+            <div id="faces-container" class="content">
+                <br /><br />
+
+            </div>
+            <center><button class="button" onclick="Capture()">Capture!</button></center>
+            <a class="button"  onclick="CameraPopup()">Capture</a>
+        </div>
+    </div>-->
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <div id="cameraPopup" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="faces-container" class="content"></div>
+                    <center><button class="button" ng-click="Capture()">Capture!</button></center>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div id="howTo" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">How to use?</h4>
+                </div>
+                <div class="modal-body">
+                    <label>Fist time user: </label>
+                    <ol>
+                        <li>Click the Camera button and take a picture of yourself.</li>
+                        <li>After there is a face detected, put in your name in the "Name:" textbox.</li>
+                        <li>Click on the Create person button.</li>
+                        <li>Click on the Train person button to let the system recognize the person you've created.</li>
+                        <li>Click on Vertify Person button to see if the ystem recognizes you.</li>
+                        <li>For better accuracy of recognition, you can take more pictures of yourself and click on the Add Face button.</li>
+                    </ol>
+                    <br />
+                    <label>Return user: </label>
+                    <ol>
+                        <li>Same steps as above except you skip 3,4 step.</li>
+                    </ol>
+                    <br />
+
+                    <font color="red">
+                        <label>For better face detection, try to avoid wearing your eyeglasses or objects that could block your face. </label>
+                    </font>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+
