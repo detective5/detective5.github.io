@@ -4,6 +4,8 @@
     }
 
 </style>
+
+
 <div>
     <center>
         <title>Contact Me</title>
@@ -42,4 +44,17 @@
         </form>
     </center>
 </div>
+<form action="http://formspree.io/johnxmai@gmailcom" method="POST">
+    <input type="email" name="_replyto">
+    <textarea name="body"></textarea>
+    <input type="submit" value="Send">
+</form>
+<div id="authorize-div" >
+    <span>Authorize access to Gmail API</span>
+    <!--Button for the user to click to initiate auth sequence -->
+    <button id="authorize-button" ng-click="handleAuthClick(event)">
+        Authorize
+    </button>
+</div>
+<pre id="output"></pre>
 <br /><br />

@@ -2,19 +2,24 @@
 
 })
 app.controller("ContactController", function ($scope, $http, $location) {
-    $scope.formInfo = {
-        Email:"",
-        Title: "",
-        Message:""
-    };
+ 
     $scope.submitOnclick = function () {
-        $http.post("View/Email.php", { Title: this.formInfo.Title, Message: this.formInfo.Message, Email: this.formInfo.Email }).
-        success(function (data, status, headers, config) {
-            $location.path("/Thanks");
-        }).
-        error(function (data, status, headers, config) {
-            alert("error");
+        $.ajax({
+            url: "//formspree.io/johnxmai@gmailcom",
+            method: "POST",
+            data: { message: "hello!" },
+            dataType: "json"
         });
+        //$http.post("http://formspree.io/johnxmai@gmailcom", { Title: this.formInfo.Title, message: this.formInfo.Message, email: this.formInfo.Email }).
+        //success(function (data, status, headers, config) {
+        //    $location.path("/Thanks");
+        //}).
+        //error(function (data, status, headers, config) {
+        //    alert("error");
+        //});
+    }
+    function callback(result) {
+        
     }
 })
 .controller("FaceLockController", function ($scope, $http, $location) {
@@ -27,7 +32,7 @@ app.controller("ContactController", function ($scope, $http, $location) {
     var canvas = document.getElementById("canvas"),
         context = canvas.getContext("2d");
     /*************************************************************************************************/
-
+    var hi;
     function errBack(error) {
         console.log("Video capture error: ", error.code);
     }
@@ -41,6 +46,7 @@ app.controller("ContactController", function ($scope, $http, $location) {
         for (e in newData) "_" !== e[0] && formData.append(e, newData[e]);
 
         myRequest = new XMLHttpRequest, myRequest.open("POST", uri, !0);
+        myRequest.withCredentials = true;
         myRequest.onload = function () {
             var a;
             myRequest.onload = null;
@@ -124,47 +130,7 @@ app.controller("ContactController", function ($scope, $http, $location) {
         context.closePath();
         context.stroke();
     }
-    function Detect() {
 
-        var uri = apiUrl + "detection/detect?" + secretKey;
-        var dataURL = canvas.toDataURL("image/jpg");
-        var blob = dataURItoBlob(dataURL);
-        var newData = { img: blob };
-        var formData = new FormData;
-        for (e in newData) "_" !== e[0] && formData.append(e, newData[e]);
-
-        myRequest = new XMLHttpRequest, myRequest.open("POST", uri, !0);
-        myRequest.onload = function () {
-            var a;
-            myRequest.onload = null;
-            clearTimeout(timeOut);
-            try {
-                a = JSON.parse(myRequest.responseText)
-            } catch (e) {
-                a = {}
-            }
-            myRequest.DONE;
-            if (a.face.length != 0) {
-                //alert("face detected");
-                document.getElementById("userText").color = "blue";
-                document.getElementById("userText").innerHTML = "Face detected"
-                DrawComponent(a);
-                FacePP.SetFaceID(a.face[0].face_id);
-
-            }
-            else {
-                alert("no face detected");
-                document.getElementById("userText").color = "red";
-                document.getElementById("userText").innerHTML = "No face detected"
-                FacePP.SetFaceID("");
-            }
-            return 200 === myRequest.status ? myRequest.promise : alert("failed")
-        };
-        timeOut = setTimeout(function () {
-            myRequest.abort();
-        }, 1E4);
-        myRequest.send(formData);
-    }
     function CreateFaceset() {
         FacePP.CreateFaceset();
     }
