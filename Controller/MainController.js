@@ -1,25 +1,21 @@
 ﻿app.controller("MainCtrl", function ($scope) {
-
 })
 app.controller("ContactController", function ($scope, $http, $location) {
- 
     $scope.submitOnclick = function () {
         $.ajax({
-            url: "//formspree.io/johnxmai@gmailcom",
+            url: "//formspree.io/johnxmai@gmail.com",
+            headers: {
+                Accept: "application/json"
+            },
             method: "POST",
-            data: { message: "hello!" },
-            dataType: "json"
+            data: { Title: this.formInfo.Title, message: this.formInfo.Message, email: this.formInfo.Email },
+            success: function () {
+                location.hash = "#/Thanks";
+            },
+            error: function () {
+                alert('Oh no! Something wrong with the server.');
+            }
         });
-        //$http.post("http://formspree.io/johnxmai@gmailcom", { Title: this.formInfo.Title, message: this.formInfo.Message, email: this.formInfo.Email }).
-        //success(function (data, status, headers, config) {
-        //    $location.path("/Thanks");
-        //}).
-        //error(function (data, status, headers, config) {
-        //    alert("error");
-        //});
-    }
-    function callback(result) {
-        
     }
 })
 .controller("FaceLockController", function ($scope, $http, $location) {

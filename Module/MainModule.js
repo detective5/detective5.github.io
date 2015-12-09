@@ -14,7 +14,8 @@ app.config(function ($routeProvider, $locationProvider) {
         )
         .when('/Contact',
             {
-                templateUrl: 'View/Contact.html'
+                templateUrl: 'View/Contact.html',
+                controller: "ContactController",
             }
         )
         .when('/About',
@@ -33,6 +34,7 @@ app.config(function ($routeProvider, $locationProvider) {
                 controller: "FaceLockController",
             }
         );
+
         //.otherwise({ redirectTo: 'Welcome.html' });
     //$locationProvider.html5Mode(true);
 
