@@ -1,1 +1,1 @@
-# detective5.github.io
+jmai.com
