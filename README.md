@@ -1,1 +1,1 @@
-# detective5.github.io
+detective5.com
