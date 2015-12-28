@@ -22,18 +22,25 @@ app.controller("ContactController", function ($scope, $http, $location) {
     /********************************global data******************************************************/
     var apiKey = "115aac29ab0e173b86bf4abadf7032ad",
         apiSecret = "WbI2jFXZ_ULHECUlmkVdscpKP3B-4dhc";
+
     var apiUrl = "http://apius.faceplusplus.com/";
+    var api = new FacePP(apiKey, apiSecret, { apiURL: 'http://apius.faceplusplus.com/' });
     var secretKey = "api_key=" + apiKey + "&api_secret=" + apiSecret;
     var localstream, video;
     var canvas = document.getElementById("canvas"),
         context = canvas.getContext("2d");
+    var loading = document.getElementById("spinner");
     /*************************************************************************************************/
-    var hi;
+
+    
+    $scope.faceDetected = "";
+    $scope.loading = true;
+    $scope.haveID = false;
+
     function errBack(error) {
         console.log("Video capture error: ", error.code);
     }
     function Detect() {
-
         var uri = apiUrl + "detection/detect?" + secretKey;
         var dataURL = canvas.toDataURL("image/jpg");
         var blob = dataURItoBlob(dataURL);
@@ -41,38 +48,37 @@ app.controller("ContactController", function ($scope, $http, $location) {
         var formData = new FormData;
         for (e in newData) "_" !== e[0] && formData.append(e, newData[e]);
 
-        myRequest = new XMLHttpRequest, myRequest.open("POST", uri, !0);
-        myRequest.withCredentials = true;
-        myRequest.onload = function () {
-            var a;
-            myRequest.onload = null;
-            clearTimeout(timeOut);
-            try {
-                a = JSON.parse(myRequest.responseText)
-            } catch (e) {
-                a = {}
-            }
-            myRequest.DONE;
-            if (a.face.length != 0) {
-                //alert("face detected");
-                document.getElementById("userText").color = "blue";
-                document.getElementById("userText").innerHTML = "Face detected"
-                DrawComponent(a);
-                FacePP.SetFaceID(a.face[0].face_id);
 
+        $.ajax({
+            url: uri,
+            type: 'POST',
+            data: formData,
+            cache: false,
+            contentType: "application/x-www-form-urlencoded",
+            processData: false,
+            success: function (e) {
+                var json = JSON.parse(e)
+                if (json.face.length != 0) {
+                    $scope.faceDetected = "Face Detected";
+                    $scope.haveID = true;
+                    DrawComponent(json);
+                    
+                    MyFaceApp.SetFaceID(json.face[0].face_id);
+                }
+                else {
+                    $scope.faceDetected = "No Face Detected";
+                    $scope.haveID = false;
+                    MyFaceApp.SetFaceID("");
+                }
+                $scope.$apply();
+                loading.style.display = "None";
+            },
+            error: function (e) {
+                alert("Error");
+                $scope.$apply();
+                loading.style.display = "None";
             }
-            else {
-                alert("no face detected");
-                document.getElementById("userText").color = "red";
-                document.getElementById("userText").innerHTML = "No face detected"
-                FacePP.SetFaceID("");
-            }
-            return 200 === myRequest.status ? myRequest.promise : alert("failed")
-        };
-        timeOut = setTimeout(function () {
-            myRequest.abort();
-        }, 1E4);
-        myRequest.send(formData);
+        });
     }
     function dataURItoBlob(c) {
         var b, a, p, h, e;
@@ -128,13 +134,18 @@ app.controller("ContactController", function ($scope, $http, $location) {
     }
 
     function CreateFaceset() {
-        FacePP.CreateFaceset();
+        MyFaceApp.CreateFaceset();
     }
-    var FacePP = (function () {
+    var MyFaceApp = (function () {
         var faceID, personID, fasesetID;
         return {
             SetFaceID: function (id) {
                 faceID = id;
+            },
+            Clear:function(){
+                faceID = null;
+                personID = null;
+                fasesetID = null;
             },
             CreatePerson: function (name, tag) {
                 if (faceID != "" && faceID != null) {
@@ -149,7 +160,11 @@ app.controller("ContactController", function ($scope, $http, $location) {
                             alert("person created");
                         },
                         error: function (e) {
-                            alert("failed");
+                            if (e != undefined) {
+                                alert(e.responseJSON.error);
+                            }
+                            else
+                                alert("failed");
                         }
                     })
                 }
@@ -165,7 +180,7 @@ app.controller("ContactController", function ($scope, $http, $location) {
                         alert(e.added + " face(s) added");
                     },
                     error: function (e) {
-                        alert("failed");
+                        alert(e.responseJSON.error);
                     }
                 });
             },
@@ -193,7 +208,7 @@ app.controller("ContactController", function ($scope, $http, $location) {
                         alert("Same person: " + e.is_same_person + ", Confidence: " + e.confidence);
                     },
                     error: function (e) {
-                        alert("failed");
+                        alert(e.responseJSON.error);
                     }
                 });
             },
@@ -206,8 +221,8 @@ app.controller("ContactController", function ($scope, $http, $location) {
                     success: function (e) {
                         alert("person trained");
                     },
-                    error: function (a) {
-                        alert("failed");
+                    error: function (e) {
+                        alert(e.responseJSON.error);
                     }
                 })
             },
@@ -222,8 +237,8 @@ app.controller("ContactController", function ($scope, $http, $location) {
                         fasesetID = e.faceset_id;
                         alert("faceset created");
                     },
-                    error: function (a) {
-                        alert("failed");
+                    error: function (e) {
+                        alert(e.responseJSON.error);
                     }
                 })
             }
@@ -232,16 +247,14 @@ app.controller("ContactController", function ($scope, $http, $location) {
     })();
     $scope.CameraPopup = function () {
         var parent = document.getElementById("faces-container");
-
+        $scope.faceDetected = "";
         // Grab elements, create settings, etc.
         if (document.getElementById("video") === null) {
-
             video = document.createElement('video');
             video.autoPlay = true;
             video.id = "video";
             video.width = "500";
             video.height = "500";
-
             parent.appendChild(video);
         }
         // Put video listeners into place
@@ -267,7 +280,6 @@ app.controller("ContactController", function ($scope, $http, $location) {
                 video.play();
             }, errBack);
         }
-
     }
     $scope.CameraPopupClose = function () {
         var parent = document.getElementById("faces-container");
@@ -281,9 +293,11 @@ app.controller("ContactController", function ($scope, $http, $location) {
             parent.removeChild(child);
         }
     }
+    
     $scope.Capture = function () {
         var parent = document.getElementById("faces-container");
         var child = document.getElementById("video");
+        loading.style.display = "";
         if (child != null && localstream != undefined) {
             if (localstream != undefined) {
                 context.drawImage(video, 0, 0, 500, 500);
@@ -303,23 +317,23 @@ app.controller("ContactController", function ($scope, $http, $location) {
         }
     }
     $scope.Create = function () {
-        if (document.getElementById("personName").value != "") {
-            if (confirm("Create person: " + document.getElementById("personName").value + "?")) {
-                FacePP.CreatePerson(document.getElementById("personName").value, "");
+        if ($scope.personName != "") {
+            if (confirm("Create person: " + $scope.personName + "?")) {
+                MyFaceApp.CreatePerson($scope.personName, "");
             }
         }
     }
     $scope.Train = function () {
-        FacePP.TrainPerson(document.getElementById("personName").value);
+        MyFaceApp.TrainPerson($scope.personName);
     }
     $scope.Vertify = function () {
-        FacePP.Verify(document.getElementById("personName").value);
+        MyFaceApp.Verify($scope.personName);
     }
     $scope.GetInfo = function () {
-        FacePP.PersonGetInfo(document.getElementById("personName").value);
+        MyFaceApp.PersonGetInfo($scope.personName);
     }
     $scope.AddFace = function () {
-        FacePP.PersonAddFaces(document.getElementById("personName").value);
+        MyFaceApp.PersonAddFaces($scope.personName);
     }
 
 });

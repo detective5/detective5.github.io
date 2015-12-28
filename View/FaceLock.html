@@ -1,4 +1,5 @@
-﻿<head>
+﻿<link rel="stylesheet" href="http://css-spinners.com/css/spinner/throbber.css" type="text/css">
+<head>
     
     <!--------------------------------------pop up css---------------------------------------->
     <style>
@@ -47,7 +48,9 @@
             .button:hover {
                 background: #c4bfbf;
             }
-
+            .button:disabled {
+                background: #c4bfbf;
+            }
         .overlay {
             position: absolute;
             top: 0;
@@ -91,6 +94,12 @@
                 text-decoration: none;
                 color: #333;
             }
+        div.center {
+            margin: auto;
+     
+            border: 3px solid #73AD21;
+            padding: 10px;
+        }
 
                 .popup .close:hover {
                     color: orange;
@@ -111,21 +120,102 @@
             display: block;
 
         }
+        img {
+            margin-left: auto;
+
+        }
+
         .modal .modal-body {
             max-height: 820px;
             max-width: 900px;
             overflow-y: auto;
         }
+
+
+   /*loading css*/
+        .spinner {
+            position: fixed;
+           
+            width: 200px;
+            height: 50px;
+            text-align: center;
+            font-size: 10px;
+            left: 50%;
+            top:40%;
+            margin-left: -100px; /* Half of the width */
+        }
+
+            .spinner > div {
+                background-color: #7686ff;
+                height: 100%;
+                width: 6px;
+                display: inline-block;
+                -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+                animation: sk-stretchdelay 1.2s infinite ease-in-out;
+            }
+
+            .spinner .rect2 {
+                -webkit-animation-delay: -1.1s;
+                animation-delay: -1.1s;
+            }
+
+            .spinner .rect3 {
+                -webkit-animation-delay: -1.0s;
+                animation-delay: -1.0s;
+            }
+
+            .spinner .rect4 {
+                -webkit-animation-delay: -0.9s;
+                animation-delay: -0.9s;
+            }
+
+            .spinner .rect5 {
+                -webkit-animation-delay: -0.8s;
+                animation-delay: -0.8s;
+            }
+
+        @-webkit-keyframes sk-stretchdelay {
+            0%, 40%, 100% {
+                -webkit-transform: scaleY(0.4);
+            }
+
+            20% {
+                -webkit-transform: scaleY(1.0);
+            }
+        }
+
+        @keyframes sk-stretchdelay {
+            0%, 40%, 100% {
+                transform: scaleY(0.4);
+                -webkit-transform: scaleY(0.4);
+            }
+
+            20% {
+                transform: scaleY(1.0);
+                -webkit-transform: scaleY(1.0);
+            }
+        }
     </style>
     <!--------------------------------------pop up css---------------------------------------->
 </head>
-<body>
-    <canvas id="canvas" width="500" height="500"></canvas>
 
+<body>
+    <img id="temImg"  />
+    <div id="spinner" class="spinner" style="display:none">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+    </div>
+    <canvas id="canvas" width="500" height="500"></canvas>
+    
     <center>
-        <label><font color="red" id="userText">No face detected</font></label>
+        
+        <label><font color="red" id="userText">{{faceDetected}}</font></label>
     </center>
     <br />
+    
     <center>
         <button class="button" data-toggle="modal" data-target="#cameraPopup" ng-click="CameraPopup()">Camera</button>
     </center>
@@ -137,16 +227,16 @@
     <div>
         <center>
             <label>Name: </label>
-            <input id="personName" class="textbox" type="text" name="name">
+            <input id="personName" class="textbox" type="text" name="name" ng-model="personName" required>
         </center>
         <br />
 
         <!--<button class="button" onclick="CreateFaceset()">Create faceset</button>-->
         <center>
-            <button class="button" ng-click="Create()">Create person</button>
-            <button class="button" ng-click="Train()">Train person</button>
-            <button class="button" ng-click="Vertify()">Vertify Person</button>
-            <button class="button" ng-click="AddFace()">Add Face</button>
+            <button class="button" ng-click="Create()" ng-disabled="!haveID || personName==undefined">Create person</button>
+            <button class="button" ng-click="Train()" ng-disabled="!haveID || personName==undefined">Train person</button>
+            <button class="button" ng-click="Vertify()" ng-disabled="!haveID || personName==undefined">Vertify Person</button>
+            <button class="button" ng-click="AddFace()" ng-disabled="!haveID || personName==undefined">Add Face</button>
             <!--<button class="button" onclick="GetInfo()">Get Info</button>-->
         </center>
 
@@ -168,7 +258,7 @@
             <a class="button"  onclick="CameraPopup()">Capture</a>
         </div>
     </div>-->
-    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
     <div id="cameraPopup" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg">
             <!-- Modal content-->
@@ -215,6 +305,5 @@
     </div>
 </body>
 
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 
 

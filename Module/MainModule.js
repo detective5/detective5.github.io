@@ -28,7 +28,7 @@ app.config(function ($routeProvider, $locationProvider) {
                 templateUrl: 'View/Thank.html'
             }
         )
-        .when('/FaceLock',
+        .when('/Projects/FaceLock',
             {
                 templateUrl: 'View/FaceLock.html',
                 controller: "FaceLockController",

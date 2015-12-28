@@ -1,85 +1,30 @@
-﻿
-    <head>
-        <!--<link rel="stylesheet" type="text/css" href="../Styles/Project.css" />
-        <link rel="stylesheet" type="text/css" href="../Styles/component2.css" />-->
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
-        <title>Projects</title>
-        <!--<link rel="stylesheet" type="text/css" href="css/normalize.css" />-->
-        
+﻿<style>
+    .thumb {
+        margin-bottom: 20px;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Projects</h1>
+        </div>
 
-    </head>
-    <body class="demo-2">
-     
-        <div class="container">
-            <section class="grid3d horizontal" id="grid3d">
-                <div class="grid-wrap">
-                    <div class="grid">
-                        
-                        <figure title="My Website"><img src="../img/MyWebsite.png"/></figure>
-                        <figure title="Person Recognition"><img src="../img/PersonRec.PNG" /></figure>
-                        <!--<figure><img src="../img/3.jpg" alt="img03" /></figure>
-                        <figure><img src="../img/1.jpg" alt="img01" /></figure>
-                        <figure><img src="../img/5.jpg" alt="img05" /></figure>
-                        <figure><img src="../img/2.jpg" alt="img02" /></figure>
-                        <figure><img src="../img/8.jpg" alt="img08" /></figure>
-                        <figure><img src="../img/9.jpg" alt="img09" /></figure>
-                        <figure><img src="../img/6.jpg" alt="img06" /></figure>
-                        <figure><img src="../img/7.jpg" alt="img07" /></figure>-->
-                    </div>
-                </div><!-- /grid-wrap -->
-                <div class="content">
-                    <div>
-                        <h1 align="center">My personal website</h1>
-                        <img class="borderSolid" src="../img/MyWebsite.png" />
-                        
-                        <p>Thanks to: </p>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <h4 >Face Lock</h4>
+            
+            <a class="thumbnail" href="#Projects/FaceLock">
+                <img class="img-responsive" src="img/FaceRec.PNG" alt="">
+            </a>
 
-                        <ul >
-                            <li>Angularjs: A powerful html framework.</li>
-                            <li>Ferro Menu: A simple jQuery menu plugin.</li>
-                            <li>Font Awesome: The iconic font and CSS toolkit</li>
-                            <li>Blueprints: A collection plugins and layouts with minimal style for easy adaption and usage.</li>
-                            <li>Sithjester's RPG Maker XP resources</li>
-                        </ul>
-                        
-                    </div>
+            <h5>What is Face Lock?</h5> 
+            Face Lock is an application that uses the face++ api for face detection and recognition. It can then be used to lock and unlock files in your system.
+            <h5>To Do</h5>
+            <ul>
+                <li>Implement lock and unlock feature</li>
+            </ul>  
+        </div>
 
-                    <div>
-                     
-                    </div>
-                    <div>
-                       
-                    </div>
-                    <div>
-                    
-                    </div>
-                    <div>
-                     
-                    </div>
-                    <div>
-                     
-                    </div>
-                    <div>
-                        
-                    </div>
-                    <div>
-                        
-                    </div>
-                    <div>
-                       
-                    </div>
-                    <span class="loading"></span>
-                    <span class="icon close-content"></span>
-                </div>
-            </section>
-        </div><!-- /container -->
-        <script src="../lib/modernizr.custom2.js"></script>
-        <script src="../lib/classie.js"></script>
-        <script src="../lib/helper.js"></script>
-        <script src="../lib/grid3d.js"></script>
-        <script>
-            new grid3D(document.getElementById('grid3d'));
-        </script>
-    </body>
+
+
+    </div>
+</div>
